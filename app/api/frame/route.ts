@@ -38,7 +38,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           label: `State: ${state?.page || 0}`,
         },
         {
-          action: 'mint',
+          action: 'link',
           label: 'Mint my Profile Pass ✋',
           target: 'https://farcaster.manifold.xyz/frame/3823839472'
         },
