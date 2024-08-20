@@ -39,12 +39,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         },
         {
           action: 'link',
-          label: 'OnchainKit',
+          label: 'Claim my Profile ✋',
           target: 'https://mecvapp.netlify.app/user/'+`${encodeURIComponent(text)}`,
         },
         {
-          action: 'post_redirect',
-          label: 'Dog pictures',
+          action: 'mint',
+          label: 'Mint my Pass 💎',
+          target: 'https://farcaster.manifold.xyz/frame/3823839472',
         },
       ],
       image: {
