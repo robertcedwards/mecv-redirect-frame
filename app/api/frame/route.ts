@@ -25,11 +25,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
    */
   if (message?.button === 3) {
     const redirectUrl = `https://mecvapp.netlify.app/user/${encodeURIComponent(text)}`;
+
     return NextResponse.redirect(redirectUrl, { status: 302 });
   }
 
   return new NextResponse(
+
     getFrameHtmlResponse({
+      
       buttons: [
         {
           label: `State: ${state?.page || 0}`,
@@ -37,7 +40,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         {
           action: 'link',
           label: 'OnchainKit',
-          target: 'https://onchainkit.xyz',
+          target: 'https://mecvapp.netlify.app/user/'+`${encodeURIComponent(text)}`,
         },
         {
           action: 'post_redirect',
