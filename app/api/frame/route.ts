@@ -43,8 +43,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           target: 'https://mecvapp.netlify.app/user/'+`${encodeURIComponent(text)}`,
         },
         {
-          action: 'post_redirect',
-          label: 'Dog pictures',
+          action: 'link',
+          label: 'Mint my Profile Pass ✋',
+          target: 'https://farcaster.manifold.xyz/frame/3823839472'
         },
       ],
       image: {
