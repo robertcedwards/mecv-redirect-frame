@@ -38,15 +38,16 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           label: `State: ${state?.page || 0}`,
         },
         {
-          action: 'link',
-          label: 'OnchainKit',
-          target: 'https://mecvapp.netlify.app/user/'+`${encodeURIComponent(text)}`,
-        },
-        {
           action: 'mint',
           label: 'Mint my Profile Pass ✋',
           target: 'https://farcaster.manifold.xyz/frame/3823839472'
         },
+        {
+          action: 'link',
+          label: 'Claim my Profile',
+          target: 'https://mecvapp.netlify.app/user/'+`${encodeURIComponent(text)}`,
+        },
+  
       ],
       image: {
         src: `${NEXT_PUBLIC_URL}/park-1.png`,
