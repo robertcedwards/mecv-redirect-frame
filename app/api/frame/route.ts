@@ -24,7 +24,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
    * Redirect to a URL with the user's input appended
    */
   if (message?.button === 3) {
-    const redirectUrl = `https://mecvapp.netlify.app/user/${encodeURIComponent(text)}`;
+    const redirectUrl = `https://mecvapp.netlify.app/user/${text}`;
     return NextResponse.redirect(redirectUrl, { status: 302 });
   }
 
