@@ -43,7 +43,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           target: 'https://mecvapp.netlify.app/user/'+`${encodeURIComponent(text)}`,
         },
         {
-          action: 'mint',
+          action: 'link',
           label: 'Mint my Profile Pass ✋',
           target: 'https://farcaster.manifold.xyz/frame/3823839472'
         },
