@@ -26,6 +26,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
    */
   if (message?.button === 3) {
     const redirectUrl = `https://mecvapp.netlify.app/user/${encodeURIComponent(text)}`;
+
     return NextResponse.redirect(redirectUrl, { status: 302 });
   }
 
@@ -33,7 +34,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const imageUrl = `data:image/png;base64,${imageBuffer.toString('base64')}`;
 
   return new NextResponse(
+
     getFrameHtmlResponse({
+      
       buttons: [
         {
           label: `State: ${state?.page || 0}`,
@@ -46,8 +49,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         {
           action: 'link',
           label: 'Claim my Profile',
-          target: `https://mecvapp.netlify.app/user/${encodeURIComponent(text)}`,
+          target: 'https://mecvapp.netlify.app/user/'+`${encodeURIComponent(text)}`,
         },
+  
       ],
       image: {
         src: imageUrl,
