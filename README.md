@@ -48,16 +48,13 @@ import { NEXT_PUBLIC_URL } from './config';
 const frameMetadata = getFrameMetadata({
   buttons: [
     {
-      label: 'Story time!',
+      label: 'Story time',
     },
     {
-      action: 'link',
-      label: 'Link to Google',
-      target: 'https://www.google.com',
-    },
-    {
-      label: 'Redirect to pictures',
-      action: 'post_redirect',
+      action: 'tx',
+      label: 'Send Base Sepolia',
+      target: `${NEXT_PUBLIC_URL}/api/tx`,
+      postUrl: `${NEXT_PUBLIC_URL}/api/tx-success`,
     },
   ],
   image: {
@@ -65,7 +62,7 @@ const frameMetadata = getFrameMetadata({
     aspectRatio: '1:1',
   },
   input: {
-    text: 'Tell me a boat story',
+    text: 'Tell me a story',
   },
   postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
 });
@@ -123,38 +120,55 @@ import { NextRequest, NextResponse } from 'next/server';
 import { NEXT_PUBLIC_URL } from '../../config';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-  let accountAddress: string | undefined = '';
-  let text: string | undefined = '';
-
   const body: FrameRequest = await req.json();
   const { isValid, message } = await getFrameMessage(body, { neynarApiKey: 'NEYNAR_ONCHAIN_KIT' });
 
-  if (isValid) {
-    accountAddress = message.interactor.verified_accounts[0];
+  if (!isValid) {
+    return new NextResponse('Message not valid', { status: 500 });
   }
 
-  if (message?.input) {
-    text = message.input;
+  const text = message.input || '';
+  let state = {
+    page: 0,
+  };
+  try {
+    state = JSON.parse(decodeURIComponent(message.state?.serialized));
+  } catch (e) {
+    console.error(e);
   }
 
+  /**
+   * Redirect to a URL with the user's input appended
+   */
   if (message?.button === 3) {
-    return NextResponse.redirect(
-      'https://www.google.com/search?q=cute+dog+pictures&tbm=isch&source=lnms',
-      { status: 302 },
-    );
+    const redirectUrl = `https://mecvapp.netlify.app/user/${encodeURIComponent(text)}`;
+    return NextResponse.redirect(redirectUrl, { status: 302 });
   }
 
   return new NextResponse(
     getFrameHtmlResponse({
       buttons: [
         {
-          label: `🌲 ${text} 🌲`,
+          label: `State: ${state?.page || 0}`,
+        },
+        {
+          action: 'link',
+          label: 'OnchainKit',
+          target: 'https://onchainkit.xyz',
+        },
+        {
+          action: 'post_redirect',
+          label: 'Dog pictures',
         },
       ],
       image: {
         src: `${NEXT_PUBLIC_URL}/park-1.png`,
       },
       postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
+      state: {
+        page: state?.page + 1,
+        time: new Date().toISOString(),
+      },
     }),
   );
 }
