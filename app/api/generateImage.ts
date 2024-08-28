@@ -20,7 +20,7 @@ export async function generateImage(text: string): Promise<Buffer> {
           fontSize: '48px',
           color: 'black',
         },
-        children: `Hello, ${text}!`,
+        children: `Hello`,
       })
     ),
     {
