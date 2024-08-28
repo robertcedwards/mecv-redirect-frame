@@ -1,6 +1,7 @@
 import { FrameRequest, getFrameMessage, getFrameHtmlResponse } from '@coinbase/onchainkit/frame';
 import { NextRequest, NextResponse } from 'next/server';
 import { NEXT_PUBLIC_URL } from '../../config';
+import { generateImage } from '../generateImage';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
@@ -25,14 +26,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
    */
   if (message?.button === 3) {
     const redirectUrl = `https://mecvapp.netlify.app/user/${encodeURIComponent(text)}`;
-
     return NextResponse.redirect(redirectUrl, { status: 302 });
   }
 
-  return new NextResponse(
+  const imageBuffer = await generateImage(encodeURIComponent(text));
+  const imageUrl = `data:image/png;base64,${imageBuffer.toString('base64')}`;
 
+  return new NextResponse(
     getFrameHtmlResponse({
-      
       buttons: [
         {
           label: `State: ${state?.page || 0}`,
@@ -45,12 +46,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         {
           action: 'link',
           label: 'Claim my Profile',
-          target: 'https://mecvapp.netlify.app/user/'+`${encodeURIComponent(text)}`,
+          target: `https://mecvapp.netlify.app/user/${encodeURIComponent(text)}`,
         },
-  
       ],
       image: {
-        src: `${NEXT_PUBLIC_URL}/park-1.png`,
+        src: imageUrl,
       },
       postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
       state: {

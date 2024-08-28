@@ -5,11 +5,11 @@ import { NEXT_PUBLIC_URL } from './config';
 const frameMetadata = getFrameMetadata({
   buttons: [
     {
-      label: 'Claim mine',
+      label: 'Check mine out',
     },
     {
       action: 'mint',
-      label: 'Mint mine',
+      label: 'Mint my pass',
       target: `eip155:8453:0x5a0ef70786324cb7428a9abcd1c2d9483144ab9a:1`
     },
   ],
