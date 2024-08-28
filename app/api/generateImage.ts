@@ -29,7 +29,7 @@ export async function generateImage(text: string): Promise<Buffer> {
       fonts: [
         {
           name: 'Arial',
-          data: await fetch('https://example.com/arial.ttf').then((res) => res.arrayBuffer()),
+          data: await fetch('https://github.com/matomo-org/travis-scripts/blob/master/fonts/Arial.ttf').then((res) => res.arrayBuffer()),
           weight: 400,
           style: 'normal',
         },
