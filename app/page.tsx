@@ -10,7 +10,7 @@ const frameMetadata = getFrameMetadata({
     {
       action: 'mint',
       label: 'Mint mine',
-      target: `eip155:8453:0x7a33eb3c8c2e137b7780cb175119ecb78c092448:1`
+      target: `eip155:8453:0x5a0ef70786324cb7428a9abcd1c2d9483144ab9a:1`
     },
   ],
   image: {
