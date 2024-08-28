@@ -1,7 +1,6 @@
 import React from 'react';
 import satori from 'satori';
-import { Resvg } from '@resvg/resvg-js';
-
+import { Resvg } from '@resvg/resvg-wasm';
 export async function generateImage(text: string): Promise<Buffer> {
   const svg = await satori(
     React.createElement(
@@ -39,5 +38,6 @@ export async function generateImage(text: string): Promise<Buffer> {
   );
 
   const resvg = new Resvg(svg);
-  return resvg.render().asPng();
+  const pngData = resvg.render().asPng();
+  return Buffer.from(pngData);
 }
